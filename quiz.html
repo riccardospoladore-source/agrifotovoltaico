@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Prove Agrivoltaiche</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h1 { color: #102a43; text-align: center; }
+        .question {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #243b53;
+        }
+        .options { list-style-type: none; padding: 0; }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            cursor: pointer;
+            padding: 10px;
+            display: block;
+            background-color: #e2e8f0;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .options label:hover { background-color: #cbd5e1; }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-submit:hover { background-color: #218838; }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            display: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Quiz di Verifica</h1>
+        
+        <form id="quizForm">
+            <div class="question">
+                1. A Chadeleuf, in che percentuale sono state mantenute le rese dell'orzo da foraggio invernale sotto la tettoia agrivoltaica rispetto al lotto di controllo?[cite: 2]
+            </div>
+            <ul class="options">
+                <li><label><input type="radio" name="q1" value="wrong"> Tra il 70% e l'80%</label></li>
+                <li><label><input type="radio" name="q1" value="correct"> Tra il 90% e il 96%</label></li>
+                <li><label><input type="radio" name="q1" value="wrong"> Tra il 100% e il 110%</label></li>
+            </ul>
+
+            <div class="question">
+                2. Di quanto è aumentata la resa in sostanza secca del mais da trinciato nel sito di Amance sotto le condizioni di eccezionale siccità?[cite: 2]
+            </div>
+            <ul class="options">
+                <li><label><input type="radio" name="q2" value="wrong"> 10,5%</label></li>
+                <li><label><input type="radio" name="q2" value="wrong"> 15,3%</label></li>
+                <li><label><input type="radio" name="q2" value="correct"> 19,6%</label></li>
+            </ul>
+
+            <div class="question">
+                3. Quale effetto ha avuto la tettoia agrivoltaica sull'evapotraspirazione durante la stagione di crescita a Chadeleuf?[cite: 2]
+            </div>
+            <ul class="options">
+                <li><label><input type="radio" name="q3" value="correct"> È diminuita del 20%</label></li>
+                <li><label><input type="radio" name="q3" value="wrong"> È rimasta invariata</label></li>
+                <li><label><input type="radio" name="q3" value="wrong"> È aumentata del 10%</label></li>
+            </ul>
+
+            <button type="button" class="btn-submit" onclick="checkAnswers()">Verifica Risposte</button>
+            <div id="quizResult" class="result"></div>
+        </form>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let score = 0;
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const resultBox = document.getElementById('quizResult');
+
+            if (!q1 || !q2 || !q3) {
+                resultBox.className = 'result error';
+                resultBox.innerHTML = 'Per favore, rispondi a tutte le domande prima di verificare.';
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            if (q1.value === 'correct') score++;
+            if (q2.value === 'correct') score++;
+            if (q3.value === 'correct') score++;
+
+            if (score === 3) {
+                resultBox.className = 'result success';
+                resultBox.innerHTML = 'Eccellente! Hai risposto correttamente a tutte le domande (3/3).';
+            } else {
+                resultBox.className = 'result error';
+                resultBox.innerHTML = 'Hai totalizzato ' + score + ' su 3. Rivedi la mappa concettuale e riprova!';
+            }
+            resultBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
